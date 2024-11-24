@@ -36,28 +36,28 @@ export class AuthService {
 
   handleAuthCallback(code: string): Observable<User> {
     // Dummy user data
-  const dummyUser: User = {
-    id: '12345',
-    name: 'Test User',
-    email: 'test.user@example.com',
-    tier: 'premium',
-    dailyCalls: 0
-  };
+  // const dummyUser: User = {
+  //   id: '12345',
+  //   name: 'Test User',
+  //   email: 'test.user@example.com',
+  //   tier: 'premium',
+  //   dailyCalls: 0
+  // };
 
-  return of(dummyUser).pipe(
-    tap(user => {
-      // Simulate saving the user to local storage and updating the current user subject
-      localStorage.setItem('user', JSON.stringify(user));
-      this.currentUserSubject.next(user);
-    })
-  );
-  /////////////////////
-    // return this.http.post<User>(`${environment.apiUrl}/auth/google/callback`, { code }).pipe(
-    //   tap(user => {
-    //     localStorage.setItem('user', JSON.stringify(user));
-    //     this.currentUserSubject.next(user);
-    //   })
-    // );
+  // return of(dummyUser).pipe(
+  //   tap(user => {
+  //     // Simulate saving the user to local storage and updating the current user subject
+  //     localStorage.setItem('user', JSON.stringify(user));
+  //     this.currentUserSubject.next(user);
+  //   })
+  // );
+  ///////////////////
+    return this.http.post<User>(`${environment.apiUrl}/auth/google/callback`, { code }).pipe(
+      tap(user => {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.currentUserSubject.next(user);
+      })
+    );
   }
 
   logout(): void {
